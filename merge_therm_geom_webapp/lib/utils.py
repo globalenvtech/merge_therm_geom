@@ -90,7 +90,7 @@ def create_hidden_link(bstream: io.BytesIO, file_name: str, file_type: str):
     url = URL.createObjectURL(file)
 
     hidden_link = document.createElement("a")
-    hidden_link.setAttribute("download", f"{file_name}_download.{file_type}")
+    hidden_link.setAttribute("download", f"{file_name}.{file_type}")
     hidden_link.setAttribute("href", url)
     hidden_link.click()
 

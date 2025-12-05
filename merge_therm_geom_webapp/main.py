@@ -9,6 +9,7 @@ from utils import create_hidden_link, write_ply_web, rgb_falsecolors, convertxyz
 from libthree import get_scene, get_camera, get_renderer, get_orbit_ctrl, get_lights, create_tri_mesh, create_grp, create_cube, viz_pts_color, create_sphere
 
 PROJECTED_PTS = None
+PLY_NAME = None
 height_3dview_ratio = 0.85
 # get the renderer and append it to index.html
 renderer = get_renderer()
@@ -89,6 +90,10 @@ async def on_pts_submit(e):
             loading_dialog = document.getElementById("loading")
             loading_dialog.showModal()
             st_item = st_file_list.item(0)
+            global PLY_NAME
+            st_full_name = st_item.name
+            st_name = st_full_name.split('.')[0]
+            PLY_NAME = st_name
             geom_item = geom_file_list.item(0)
 
             st_bytes = await get_bytes_from_file(st_item)
@@ -166,7 +171,7 @@ async def on_pts_submit(e):
         print(e)
 
 def downloadFile(*args):
-    create_hidden_link(PROJECTED_PTS, 'projected_temperatures', 'ply')
+    create_hidden_link(PROJECTED_PTS, f"{PLY_NAME}_projected", 'ply')
 
 if __name__ == "__main__":
     animate()
