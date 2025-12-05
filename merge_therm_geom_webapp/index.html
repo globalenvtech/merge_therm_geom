@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- import the threejs modules here for pyscript -->
+    <link rel="stylesheet" href="./assets/css/webapp.css" />
+    <script src="/mini-coi.js"></script>
+    <script type="module">
+        const loading = document.getElementById('loading');
+        addEventListener('py:ready', () => loading.close());
+        loading.showModal();
+    </script>
+    <title>Project Thermal Array onto Space Geometry</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.181.2/build/three.module.js"
+        }
+      }
+    </script>
+    <!-- Recommended meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- PyScript CSS -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2025.11.1/core.css">
+    <!-- This script tag bootstraps PyScript -->
+    <script type="module" src="https://pyscript.net/releases/2025.11.1/core.js"></script>
+</head>
+<body>
+    <dialog id="loading">
+      <h1>Loading...</h1>
+      <p id="dialogText"></p>
+    </dialog>
+    <div class="container">
+      <div class="top">
+        <h1>Project PLY Thermal Array onto STL Geometry (Only works on Chromium-based browser e.g. Chrome, Edge ...)</h1>
+        <div>
+          <label for="Upload File">Surface Temperature Point Cloud File (.ply)</label>
+          <input type="file" id="stpts-file-upload">
+        </div>
+        <div>
+          <label for="posxyz">Position of SoLo Sensor</label>
+          <input id="posx" type="number" placeholder="X coordinate..." step="0.1">
+          <input id="posy" type="number" placeholder="Y coordinate..." step="0.1">
+          <input id="posz" type="number" placeholder="Z coordinate..." step="0.1">
+        </div>
+        <div>
+          <label for="Upload File">Geometry File (.stl)</label>
+          <input type="file" id="geom-file-upload">
+        </div>
+        <div>
+          <button id="stgeom-submit">Project Surface Temperatures</button>
+          <label id="stgeom-output">No Projection Executed</label>
+        </div>
+        <div>
+          <button id="st-download">Download Projected Temperatures</button>
+          <label id="st-output"></label>
+        </div>
+      </div>
+      <div class="bottom" id="bottomSide">
+        <div class="falsecolor-legend">
+          <div class="legend-title">Temperatures</div>
+          <div class="legend-bar"></div>
+          <div class="legend-labels">
+            <span id = 'fcval5'>1.0</span>
+            <span id = 'fcval4'>0.75</span>
+            <span id = 'fcval3'>0.5</span>
+            <span id = 'fcval2'>0.25</span>
+            <span id = 'fcval1'>0.0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="py" src="./main.py" config="./pyscript.toml"></script>
+</body>
+</html>
