@@ -5,8 +5,8 @@ from pyodide.ffi.wrappers import add_event_listener
 from pyscript.ffi import create_proxy
 from pyscript import window, document, PyWorker
 
-from utils import create_hidden_link, write_ply_web, rgb_falsecolors, convertxyz2zxy
-from libthree import get_scene, get_camera, get_renderer, get_orbit_ctrl, get_lights, create_tri_mesh, create_grp, create_cube, viz_pts_color, create_sphere
+from pyscript_3dapp_lib.utils import create_hidden_link, write_ply_web, rgb_falsecolors, convertxyz2zxy
+from pyscript_3dapp_lib.libthree import get_scene, get_camera, get_renderer, get_orbit_ctrl, get_lights, create_tri_mesh, create_grp, create_cube, viz_pts_color, create_sphere
 
 PROJECTED_PTS = None
 PLY_NAME = None
@@ -105,9 +105,9 @@ async def on_pts_submit(e):
             sensor_pos_zxy = convertxyz2zxy([[posx_val, posy_val, posz_val]])[0]
             # Await for the worker
             worker_config = {
-                                "packages": ["plyfile>=1.1.3", "geomie3d==0.0.10", "numpy-stl==3.2.0"],
-                                "files": {"./lib/raytracemrtlib.py": "", 
-                                          "./lib/utils.py": ""}
+                                "packages": ["plyfile>=1.1.3", "geomie3d==0.0.10", "numpy-stl==3.2.0", 
+                                             "./lib/pyscript_3dapp_lib-0.0.1.post1-py3-none-any.whl",
+                                             "./lib/raytrace_mrt_lib-0.0.1-py3-none-any.whl"]
                             }
             worker = PyWorker("./worker.py", type="pyodide", config = worker_config)
             # Await for the worker

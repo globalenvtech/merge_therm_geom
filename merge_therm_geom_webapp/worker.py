@@ -1,8 +1,8 @@
 import geomie3d
 import numpy as np
 
-from raytracemrtlib import separate_rays
-from utils import convertxyz2zxy, read_stl_web, read_ply_web
+from raytrace_mrt_lib import separate_rays
+from pyscript_3dapp_lib.utils import convertxyz2zxy, read_stl_web, read_ply_web
 from pyscript import sync
 
 def process_plydata(plydata: np.ndarray) -> dict:
