@@ -5,7 +5,7 @@ from pyodide.ffi.wrappers import add_event_listener
 from pyscript.ffi import create_proxy
 from pyscript import window, document, PyWorker
 
-from pyscript_3dapp_lib.utils import create_hidden_link, write_ply_web, rgb_falsecolors, convertxyz2zxy
+from pyscript_3dapp_lib.utils import create_hidden_link, write_ply_web, rgb_falsecolors, convertxyz2zxy, get_bytes_from_file
 from pyscript_3dapp_lib.libthree import get_scene, get_camera, get_renderer, get_orbit_ctrl, get_lights, create_tri_mesh, create_grp, create_cube, viz_pts_color, create_sphere
 
 PROJECTED_PTS = None
@@ -64,10 +64,6 @@ def change_color_bar(mnval: float, mxval: float):
         color_label = document.getElementById("fcval" + str(cnt+1))
         color_label.textContent = str(round(i, 1))
 
-async def get_bytes_from_file(item) -> bytes:
-    array_buf = await item.arrayBuffer()
-    return array_buf.to_bytes()
-
 async def on_pts_submit(e):
     try:
         t1 = perf_counter()
@@ -106,7 +102,7 @@ async def on_pts_submit(e):
             # Await for the worker
             worker_config = {
                                 "packages": ["plyfile>=1.1.3", "geomie3d==0.0.10", "numpy-stl==3.2.0", 
-                                             "./lib/pyscript_3dapp_lib-0.0.1.post1-py3-none-any.whl",
+                                             "./lib/pyscript_3dapp_lib-0.0.1.post3-py3-none-any.whl",
                                              "./lib/raytrace_mrt_lib-0.0.1-py3-none-any.whl"]
                             }
             worker = PyWorker("./worker.py", type="pyodide", config = worker_config)
