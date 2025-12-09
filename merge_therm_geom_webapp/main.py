@@ -103,7 +103,7 @@ async def on_pts_submit(e):
             worker_config = {
                                 "packages": ["plyfile>=1.1.3", "geomie3d==0.0.10", "numpy-stl==3.2.0", 
                                              "./lib/pyscript_3dapp_lib-0.0.1.post3-py3-none-any.whl",
-                                             "./lib/raytrace_mrt_lib-0.0.1-py3-none-any.whl"]
+                                             "./lib/raytrace_mrt_lib-0.0.1.post1-py3-none-any.whl"]
                             }
             worker = PyWorker("./worker.py", type="pyodide", config = worker_config)
             # Await for the worker
