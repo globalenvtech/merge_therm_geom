@@ -101,9 +101,9 @@ async def on_pts_submit(e):
             sensor_pos_zxy = convertxyz2zxy([[posx_val, posy_val, posz_val]])[0]
             # Await for the worker
             worker_config = {
-                                "packages": ["plyfile>=1.1.3", "geomie3d==0.0.10", "numpy-stl==3.2.0", 
-                                             "./lib/pyscript_3dapp_lib-0.0.1.post3-py3-none-any.whl",
-                                             "./lib/raytrace_mrt_lib-0.0.1.post1-py3-none-any.whl"]
+                                "packages": ["plyfile>=1.1.3", "geomie3d==0.0.11", "numpy-stl==3.2.0", 
+                                             "./lib/pyscript_3dapp_lib-0.0.2-py3-none-any.whl",
+                                             "./lib/raytrace_mrt_lib-0.0.2-py3-none-any.whl"]
                             }
             worker = PyWorker("./worker.py", type="pyodide", config = worker_config)
             # Await for the worker

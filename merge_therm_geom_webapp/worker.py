@@ -2,7 +2,7 @@ import geomie3d
 import numpy as np
 
 from raytrace_mrt_lib import separate_rays
-from pyscript_3dapp_lib.utils import convertxyz2zxy, read_stl_web, read_ply_web
+from pyscript_3dapp_lib.utils import convertxyz2zxy, read_stl_web, read_ply_web, get_cam_place_from_xyzs
 from pyscript import sync
 
 def process_plydata(plydata: np.ndarray) -> dict:
@@ -127,12 +127,7 @@ def proj_therm2stl(ply_bytes: bytes, stl_bytes: bytes, sensor_pos: list) -> dict
     stl_pts_xyzs = mesh2pts(stl_xyzs)
     stl_pts_zxys = convertxyz2zxy(stl_pts_xyzs)
     stl_pts_zxys_flatten = stl_pts_zxys.flatten().tolist()
-
-    bbox = geomie3d.calculate.bbox_frm_xyzs(stl_pts_xyzs)
-    bbox_arr = bbox.bbox_arr
-    cam_pos = [bbox_arr[3]+5, bbox_arr[4]+5, bbox_arr[5]+5]
-    bbox_midpt = geomie3d.calculate.bboxes_centre([bbox])[0].tolist()
-    cam_place = [cam_pos, bbox_midpt]
+    cam_place = get_cam_place_from_xyzs(stl_pts_xyzs, zoom_out_val = 5)
     cam_place_zxy = convertxyz2zxy(cam_place)
     # ply pts
     proj_xyzs = []
