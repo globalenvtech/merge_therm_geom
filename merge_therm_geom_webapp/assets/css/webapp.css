@@ -11,7 +11,7 @@ body {
 }
 
 .top {
-    height: 15%;
+    height: 18%;
     flex-grow: 1;
     justify-content: center;
     align-items: center;
@@ -19,7 +19,7 @@ body {
 }
 
 .bottom {
-    height: 85%;
+    height: 82%;
     background-color: #cccccc;
 }
 
