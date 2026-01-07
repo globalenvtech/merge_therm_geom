@@ -47,15 +47,24 @@ def mesh2pts(mesh_xyzs: np.ndarray):
     mesh_points = np.reshape(mesh_xyzs, (ntri*3, 3))
     return mesh_points
 
-def proj_therm2stl(ply_bytes: bytes, stl_bytes: bytes, sensor_pos: list) -> dict:
+def proj_therm2stl(ply_bytes: bytes, stl_bytes: bytes, sensor_pos: list, sensor_rot: float) -> dict:
     """
     project thermal point cloud onto stl file
 
     Parameters
     ----------
     ply_bytes: bytes
-        np.ndarray[shape(ntri, 3, 3)] 
+        JS bytes from the file specified. Need to be converted to python with .to_py() function.
+    
+    stl_bytes: bytes
+        JS bytes from the file specified. Need to be converted to python with .to_py() function.
 
+    sensor_pos: list
+        [x,y,z] position of the sensor.
+
+    sensor_rot: float
+        rotation of the sensor.
+        
     Returns
     -------
     flatten_mesh_xyzs : np.ndarray
@@ -82,22 +91,24 @@ def proj_therm2stl(ply_bytes: bytes, stl_bytes: bytes, sensor_pos: list) -> dict
     sync.change_dialog_text('Moving PLY pts to sensor position ...')
     gverts = geomie3d.create.vertex_list(ply_xyzs, attributes_list=temps)
     vcomp = geomie3d.create.composite(gverts)
-    mv_vcomp = geomie3d.modify.move_topo(vcomp, sensor_pos)
-    mv_gverts = geomie3d.get.topo_explorer(mv_vcomp, geomie3d.topobj.TopoType.VERTEX)
+    # mv_vcomp = geomie3d.modify.move_topo(vcomp, sensor_pos)
+    print(sensor_rot)
+    rot_vcomp = geomie3d.modify.rotate_topo(vcomp, [0,0,1], sensor_rot)
+    rot_gverts = geomie3d.get.topo_explorer(rot_vcomp, geomie3d.topobj.TopoType.VERTEX)
     # endregion: read ply file
     #------------------------------------------------------------------
     # region: convert the ply data to rays
     sync.change_dialog_text('Converting PLY pts to rays ...')
     
     rays = []
-    for vcnt,v in enumerate(gverts):
+    for vcnt,v in enumerate(rot_gverts):
         temp = v.attributes['temperature']
         ray = geomie3d.create.ray(sensor_pos, v.point.xyz, attributes = {'temperature':temp, 'id': vcnt})
         rays.append(ray)
     
     aloop = 1000000#30
     ntri = len(stl_xyzs)
-    ndir = len(mv_gverts)
+    ndir = len(rot_gverts)
     ttl = ndir*ntri
     nparallel = int(ttl/aloop)
     

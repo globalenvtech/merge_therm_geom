@@ -32,7 +32,7 @@
     </dialog>
     <div class="container">
       <div class="top">
-        <h1>Project PLY Thermal Array onto STL Geometry (v0.0.1) (<a href="https://globalenvtech.github.io/get_manuals/merge-therm-geom/" target="_blank">User Manual</a>) (Only use Chromium-based browser e.g. Chrome, Edge ...)</h1>
+        <h1>Project PLY Thermal Array onto STL Geometry (v0.0.2) (<a href="https://globalenvtech.github.io/get_manuals/merge-therm-geom/" target="_blank">User Manual</a>) (Only use Chromium-based browser e.g. Chrome, Edge ...)</h1>
         <div>
           <label for="Upload File">Surface Temperature Point Cloud File (.ply)</label>
           <input type="file" id="stpts-file-upload">
@@ -42,6 +42,10 @@
           <input id="posx" type="number" placeholder="X coordinate..." step="0.1">
           <input id="posy" type="number" placeholder="Y coordinate..." step="0.1">
           <input id="posz" type="number" placeholder="Z coordinate..." step="0.1">
+        </div>
+        <div>
+          <label for="rot">Orientation of SoLo Sensor (degree)</label>
+          <input id="rot" type="number" placeholder="Anti-Clockwise Rotation ... " value="0" step="1" min="0" max="359">
         </div>
         <div>
           <label for="Upload File">Geometry File (.stl)</label>

@@ -112,7 +112,8 @@ async def on_pts_submit(e):
 
             world = create_grp()
             sensor_pos = [posx_val, posy_val, posz_val]
-            proj_data = await worker.sync.proj_therm2stl(st_bytes, geom_bytes, sensor_pos)
+            sensor_rot = float(document.querySelector("#rot").value)
+            proj_data = await worker.sync.proj_therm2stl(st_bytes, geom_bytes, sensor_pos, sensor_rot)
             stl_xyzs = proj_data.stl
             ply_xyzs_viz = proj_data.proj_ply_viz
             ply_write = proj_data.proj_ply_write
