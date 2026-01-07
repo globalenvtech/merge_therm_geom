@@ -91,8 +91,6 @@ def proj_therm2stl(ply_bytes: bytes, stl_bytes: bytes, sensor_pos: list, sensor_
     sync.change_dialog_text('Moving PLY pts to sensor position ...')
     gverts = geomie3d.create.vertex_list(ply_xyzs, attributes_list=temps)
     vcomp = geomie3d.create.composite(gverts)
-    # mv_vcomp = geomie3d.modify.move_topo(vcomp, sensor_pos)
-    print(sensor_rot)
     rot_vcomp = geomie3d.modify.rotate_topo(vcomp, [0,0,1], sensor_rot)
     rot_gverts = geomie3d.get.topo_explorer(rot_vcomp, geomie3d.topobj.TopoType.VERTEX)
     # endregion: read ply file
